@@ -21,7 +21,7 @@
             </p>
         </div>
         <div class="img-div">
-            <img src="../../assets/images/team.jpg" alt="team_image">
+            <img src="../assets/images/team.jpg" alt="team_image">
         </div>
         <div class="text">
             <h1>Our Plan</h1>

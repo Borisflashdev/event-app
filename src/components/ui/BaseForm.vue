@@ -77,11 +77,17 @@ export default {
                 this.invalidDesc = true;
                 return;
             }
-            await axios.post('http://localhost:5005/api/v1/event', {
+
+            const userData = {
                 name: this.name,
                 date: this.date,
                 description: this.description,
-            }).then((responseData) => {
+                token: localStorage.getItem('token')
+            }
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+
+            await axios.post('http://localhost:5005/api/v1/event', userData).then((responseData) => {
                 console.log(responseData);
             }).catch((error) => {
                 console.log(error);

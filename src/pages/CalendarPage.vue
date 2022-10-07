@@ -28,8 +28,8 @@
 
 <script>
 import axios from 'axios';
-import BaseForm from '../ui/BaseForm.vue';
-import BaseEvent from '../ui/BaseEvent.vue';
+import BaseForm from '../components/ui/BaseForm.vue';
+import BaseEvent from '../components/ui/BaseEvent.vue';
 
 export default {
   components: { BaseForm, BaseEvent },
@@ -49,16 +49,20 @@ export default {
     },
     methods: {
         async getEvents() {
+
             this.more = false;
             this.isLoading = true;
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+
             await axios.get('http://localhost:5005/api/v1/events').then((responseData) => {
                 const events = [];
-                for (const id in responseData.data.event) {
-                    events.unshift({
-                        id: responseData.data.event[id]._id, 
-                        name: responseData.data.event[id].name,
-                        date: responseData.data.event[id].date,
-                        desc: responseData.data.event[id].description,
+                for (const id in responseData.data.events) {
+                    events.push({
+                        id: responseData.data.events[id]._id, 
+                        name: responseData.data.events[id].name,
+                        date: responseData.data.events[id].date,
+                        desc: responseData.data.events[id].description,
                     });
                 }
                 this.eventsData = events;
@@ -76,6 +80,8 @@ export default {
         },
         async getEvent(id) {
             this.more = true;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+
             await axios.get(`http://localhost:5005/api/v1/${id}`).then((responseData) => {
                 this.eventData = responseData.data.event;
                 console.log(this.eventData);

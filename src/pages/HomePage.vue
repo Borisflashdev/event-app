@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div>
-                <img :src="require('../../assets/images/' + panel.imageLink)" :alt="panel.altImg">
+                <img :src="require('../assets/images/' + panel.imageLink)" :alt="panel.altImg">
             </div>
         </div>
     </div>

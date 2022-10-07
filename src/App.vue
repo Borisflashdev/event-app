@@ -16,6 +16,9 @@ export default {
   components: {
     NavBar,
     FooterTab  
+  },
+  created() {
+    this.$store.dispatch('autoLogin');
   }
 }
 </script>

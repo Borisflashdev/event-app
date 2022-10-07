@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router.js';
+import store from './index.js';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -18,5 +19,6 @@ app.component('base-button', BaseButton);
 app.component('base-event', BaseEvent);
 app.component('base-spinner', BaseSpinner);
 app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(store);
 app.use(router);
 app.mount('#app');

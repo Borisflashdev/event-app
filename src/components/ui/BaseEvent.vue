@@ -86,6 +86,7 @@ export default {
     },
     async nameEdit() {
       const id = this.eventData._id;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
       await axios.patch(`http://localhost:5005/api/v1/${id}`, { name: this.newName }).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
@@ -96,6 +97,7 @@ export default {
     },
     async dateEdit() {
       const id = this.eventData._id;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
       await axios.patch(`http://localhost:5005/api/v1/${id}`, { date: this.newDate }).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
@@ -106,6 +108,7 @@ export default {
     },
     async descEdit() {
       const id = this.eventData._id;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
       await axios.patch(`http://localhost:5005/api/v1/${id}`, { description: this.newDesc }).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
@@ -116,6 +119,7 @@ export default {
     },
     async deleteEvent() {
       const id = this.eventData._id;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
       await axios.delete(`http://localhost:5005/api/v1/${id}`).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
