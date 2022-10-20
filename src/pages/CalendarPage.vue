@@ -56,13 +56,14 @@ export default {
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
             await axios.get('http://localhost:5005/api/v1/events').then((responseData) => {
+                console.log(responseData.data.result);
                 const events = [];
-                for (const id in responseData.data.events) {
+                for (const id in responseData.data.result) {
                     events.push({
-                        id: responseData.data.events[id]._id, 
-                        name: responseData.data.events[id].name,
-                        date: responseData.data.events[id].date,
-                        desc: responseData.data.events[id].description,
+                        id: responseData.data.result[id].event_id, 
+                        name: responseData.data.result[id].name,
+                        date: responseData.data.result[id].date,
+                        desc: responseData.data.result[id].description,
                     });
                 }
                 this.eventsData = events;
@@ -83,7 +84,7 @@ export default {
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
             await axios.get(`http://localhost:5005/api/v1/${id}`).then((responseData) => {
-                this.eventData = responseData.data.event;
+                this.eventData = responseData.data.result;
                 console.log(this.eventData);
             })
         }

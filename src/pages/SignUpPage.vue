@@ -100,11 +100,11 @@ export default {
                 username: this.username,
                 password: this.password
             }).then((responseData) => {
-                this.$store.state.token = responseData.data.user.token;
-                this.$store.state.userName = this.username;
+                this.$store.state.token = responseData.data.result[0].token;
+                this.$store.state.userName = responseData.data.result[0].username;
 
-                localStorage.setItem('token', responseData.data.user.token);
-                localStorage.setItem('userName', this.username);
+                localStorage.setItem('token', responseData.data.result[0].token);
+                localStorage.setItem('userName', responseData.data.result[0].username);
             }).catch((error) => {
                 console.log(error);
                 this.errorMsg = error.response.data.msg || 'Something went wrong, please refresh and try again later.';

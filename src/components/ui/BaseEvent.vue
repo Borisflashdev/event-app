@@ -5,7 +5,7 @@
       <dialog open v-if="show">
         <header>
           <p v-if="!editName">
-            {{ eventData.name }} 
+            {{ eventData[0].name }} 
             <font-awesome-icon icon="fa-solid fa-pen-to-square" class="edit-btn" @click="editName = true" />
           </p>
           <div v-else class="edit-div">
@@ -16,7 +16,7 @@
         <section>
           <div>
             <h2 v-if="!editDate">
-              Date: {{ eventData.date }}
+              Date: {{ eventData[0].date }}
               <font-awesome-icon icon="fa-solid fa-pen-to-square" class="edit-btn" @click="editDate = true" />
             </h2>
             <div v-else>
@@ -26,7 +26,7 @@
           </div>
           <div class="desc-wrapper">
             <h2 v-if="!editDesc">
-              Description: {{ eventData.description }}
+              Description: {{ eventData[0].description }}
               <font-awesome-icon icon="fa-solid fa-pen-to-square" class="edit-btn" @click="editDesc = true" />
             </h2>
             <div v-else>
@@ -69,9 +69,9 @@ export default {
       editName: false,
       editDate: false,
       editDesc: false,
-      newName: this.eventData.name,
-      newDate: this.eventData.date,
-      newDesc: this.eventData.description
+      newName: '',
+      newDate: '',
+      newDesc: ''
     }
   },
   methods: {
@@ -85,20 +85,29 @@ export default {
       this.$emit('close');
     },
     async nameEdit() {
-      const id = this.eventData._id;
+      const id = this.eventData[0].event_id;
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-      await axios.patch(`http://localhost:5005/api/v1/${id}`, { name: this.newName }).then((responseData) => {
+      await axios.patch(`http://localhost:5005/api/v1/${id}`, {
+        name: this.newName,
+        description: this.eventData[0].description,
+        date: this.eventData[0].date
+      }).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
         console.log(error);
       });
       this.editName = false;
       this.$emit('getEvents');
+
     },
     async dateEdit() {
-      const id = this.eventData._id;
+      const id = this.eventData[0].event_id;
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-      await axios.patch(`http://localhost:5005/api/v1/${id}`, { date: this.newDate }).then((responseData) => {
+      await axios.patch(`http://localhost:5005/api/v1/${id}`, {
+        name: this.eventData[0].name,
+        description: this.eventData[0].description,
+        date: this.newDate
+      }).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
         console.log(error);
@@ -107,9 +116,13 @@ export default {
       this.$emit('getEvents');
     },
     async descEdit() {
-      const id = this.eventData._id;
+      const id = this.eventData[0].event_id;
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-      await axios.patch(`http://localhost:5005/api/v1/${id}`, { description: this.newDesc }).then((responseData) => {
+      await axios.patch(`http://localhost:5005/api/v1/${id}`, {
+        name: this.eventData[0].name,
+        description: this.newDesc,
+        date: this.eventData[0].date
+      }).then((responseData) => {
         console.log(responseData);
       }).catch((error) => {
         console.log(error);
@@ -118,7 +131,7 @@ export default {
       this.$emit('getEvents');
     },
     async deleteEvent() {
-      const id = this.eventData._id;
+      const id = this.eventData[0].event_id;
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
       await axios.delete(`http://localhost:5005/api/v1/${id}`).then((responseData) => {
         console.log(responseData);
@@ -127,7 +140,7 @@ export default {
       });
       this.$emit('getEvents');
     }
-  },
+  }
 };
 </script>
 

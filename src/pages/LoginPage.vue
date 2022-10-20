@@ -85,8 +85,8 @@ export default {
             }
 
             await axios.post('http://localhost:5005/api/v1/login', formData).then((responseData) => {
-                const token = responseData.data.existingUser.token;
-                const username = responseData.data.existingUser.username;
+                const token = responseData.data.result[0].token;
+                const username = responseData.data.result[0].username;
 
                 this.$store.state.token = token;
                 this.$store.state.userName = username;
