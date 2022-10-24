@@ -96,13 +96,23 @@ export default {
                 this.invalidConfirm = true;
                 return;
             }
-            await axios.post(`http://localhost:5005/api/v1/signup`, {
-                username: this.username,
-                password: this.password
-            }).then((responseData) => {
+
+            const config = {
+                headers:{
+                    username: this.username,
+                    password: this.password
+                }
+            };
+
+            const data ={
+                name: "ignore_data",
+            }
+
+            await axios.post(`http://localhost:5005/api/v1/signup`, data, config).then((responseData) => {
                 this.$store.state.token = responseData.data.result[0].token;
                 this.$store.state.userName = responseData.data.result[0].username;
-
+                
+                localStorage.setItem('userId', responseData.data.result[0].user_id);
                 localStorage.setItem('token', responseData.data.result[0].token);
                 localStorage.setItem('userName', responseData.data.result[0].username);
             }).catch((error) => {

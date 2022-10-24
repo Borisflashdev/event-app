@@ -78,16 +78,16 @@ export default {
                 return;
             }
 
-            const userData = {
+            const eventData = {
                 name: this.name,
                 date: this.date,
                 description: this.description,
-                token: localStorage.getItem('token')
+                userId: localStorage.getItem('userId')
             }
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
-            await axios.post('http://localhost:5005/api/v1/event', userData).then((responseData) => {
+            await axios.post('http://localhost:5005/api/v1/event', eventData).then((responseData) => {
                 console.log(responseData);
             }).catch((error) => {
                 console.log(error);

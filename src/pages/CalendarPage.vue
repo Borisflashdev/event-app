@@ -55,8 +55,13 @@ export default {
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
-            await axios.get('http://localhost:5005/api/v1/events').then((responseData) => {
-                console.log(responseData.data.result);
+            const config = {
+                headers:{
+                    userId: localStorage.getItem('userId'),
+                }
+            };
+
+            await axios.get('http://localhost:5005/api/v1/events', config).then((responseData) => {
                 const events = [];
                 for (const id in responseData.data.result) {
                     events.push({

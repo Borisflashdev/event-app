@@ -79,18 +79,25 @@ export default {
                 return;
             }
 
-            const formData = {
-                username: this.username,
-                password: this.password
+            const config = {
+                headers:{
+                    username: this.username,
+                    password: this.password
+                }
+            };
+
+            const data ={
+                name: "ignore_data",
             }
 
-            await axios.post('http://localhost:5005/api/v1/login', formData).then((responseData) => {
+            await axios.post('http://localhost:5005/api/v1/login', data, config).then((responseData) => {
                 const token = responseData.data.result[0].token;
                 const username = responseData.data.result[0].username;
 
                 this.$store.state.token = token;
                 this.$store.state.userName = username;
 
+                localStorage.setItem('userId', responseData.data.result[0].user_id);
                 localStorage.setItem('token', token);
                 localStorage.setItem('userName', username);
                 this.$router.replace('/calendar');
